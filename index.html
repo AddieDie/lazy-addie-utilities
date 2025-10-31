@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <title>Lazy Addie Utilities</title>
+    <meta name="description" content="A fast, single‑file website with handy tools, a theme toggle, and a PlayerStatus preview.">
+  </head>
+  <body>
+    <div class="card">
+      <header>
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Lazy Addie Utilities</h1>
+        <nav class="nav">
+          <a href="#securepass">SecurePass</a>
+          <a href="#about">About</a>
+          <a href="#tools">Tools</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <button id="themeToggle" class="theme-toggle" title="Toggle theme" aria-pressed="false" aria-label="Toggle dark or light">🌙</button>
+      </header>
+      <main>
+        <p class="lead">Addie utilities for the lazy.</p>
+
+        <section id="securepass">
+          <h2>SecurePass</h2>
+          <div class="info">
+            <div class="tile">
+              <strong>Password Generator</strong>
+              <div class="muted">Create secure passwords with your preferred options.</div>
+              <div class="cta-row">
+                <label for="passLength" class="sr-only">Length</label>
+                <input id="passLength" type="number" min="4" max="128" value="16" style="width:120px;" />
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                  <label><input type="checkbox" id="useLower" checked /> lowercase</label>
+                  <label><input type="checkbox" id="useUpper" checked /> UPPERCASE</label>
+                  <label><input type="checkbox" id="useNums" checked /> 0-9</label>
+                  <label><input type="checkbox" id="useSyms" /> symbols</label>
+                </div>
+              </div>
+              <div class="cta-row">
+                <button class="btn" id="genPass">Generate</button>
+                <button class="btn secondary" id="copyPass">Copy</button>
+              </div>
+              <div class="tile" style="margin-top:12px; background: rgba(2,6,23,0.6);">
+                <strong>Result</strong>
+                <div id="passOut" style="word-break:break-all;">(click Generate)</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="about">
+          <h2>About</h2>
+          <div class="info">
+            <div class="tile">
+              <strong>Purpose</strong>
+              <div class="muted">A tiny, fast starter you can extend. Works offline when opened locally.</div>
+            </div>
+            <div class="tile">
+              <strong>Tech</strong>
+              <div class="muted">Plain HTML, CSS, and JS — no build tools or dependencies.</div>
+            </div>
+            <div class="tile">
+              <strong>Tip</strong>
+              <div class="muted">Use the theme toggle. Your preference is remembered.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="tools">
+          <h2>Quick Tools</h2>
+          <div class="cta-row">
+          <button class="btn" id="helloBtn">Say Hello</button>
+          <button class="btn secondary" id="timeBtn">Show Time</button>
+          </div>
+
+          <div class="info">
+          <div class="tile">
+            <strong>Status</strong>
+            <div id="status" class="muted" role="status" aria-live="polite">Waiting for action…</div>
+            <div class="cta-row">
+              <button class="btn" id="copyStatus">Copy Status</button>
+            </div>
+          </div>
+          <div class="tile">
+            <strong>Temperature Converter</strong>
+            <div class="muted">Convert between Celsius and Fahrenheit.</div>
+            <div class="cta-row">
+              <label for="celsius" class="sr-only">Celsius</label>
+              <input id="celsius" type="number" inputmode="decimal" step="any" placeholder="Celsius" aria-describedby="toF" />
+              <label for="fahrenheit" class="sr-only">Fahrenheit</label>
+              <input id="fahrenheit" type="number" inputmode="decimal" step="any" placeholder="Fahrenheit" aria-describedby="toC" />
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="toF">C → F</button>
+              <button class="btn secondary" id="toC">F → C</button>
+            </div>
+          </div>
+          <div class="tile">
+            <strong>Word Counter</strong>
+            <div class="muted">Counts words and characters as you type.</div>
+            <div class="cta-row">
+              <label for="wcInput" class="sr-only">Text to count</label>
+              <textarea id="wcInput" rows="4" style="width:100%;" placeholder="Type or paste text here"></textarea>
+            </div>
+            <div class="muted" id="wcStats">0 words, 0 characters</div>
+          </div>
+          <div class="tile">
+            <strong>UUID Generator</strong>
+            <div class="muted">Generate a random UUID v4.</div>
+            <div class="cta-row">
+              <button class="btn" id="genUuid">Generate UUID</button>
+              <button class="btn secondary" id="copyUuid">Copy</button>
+            </div>
+            <div id="uuidOut" style="word-break:break-all;">(click Generate UUID)</div>
+          </div>
+          <div class="tile">
+            <strong>Base64 Encode/Decode</strong>
+            <div class="muted">UTF‑8 safe conversion.</div>
+            <div class="cta-row">
+              <label for="b64Input" class="sr-only">Text</label>
+              <textarea id="b64Input" rows="3" style="width:100%;" placeholder="Text"></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="b64Encode">Encode →</button>
+              <button class="btn secondary" id="b64Decode">← Decode</button>
+              <button class="btn" id="copyB64">Copy Result</button>
+            </div>
+            <div id="b64Out" style="word-break:break-all;">(result appears here)</div>
+          </div>
+          <div class="tile">
+            <strong>URL Encode/Decode</strong>
+            <div class="muted">Escape or unescape URLs.</div>
+            <div class="cta-row">
+              <label for="urlInput" class="sr-only">URL text</label>
+              <textarea id="urlInput" rows="2" style="width:100%;" placeholder="URL or text"></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="urlEncode">Encode →</button>
+              <button class="btn secondary" id="urlDecode">← Decode</button>
+              <button class="btn" id="copyUrl">Copy Result</button>
+            </div>
+            <div id="urlOut" style="word-break:break-all;">(result appears here)</div>
+          </div>
+          <div class="tile">
+            <strong>SHA‑256 Hasher</strong>
+            <div class="muted">Hash text to hex digest.</div>
+            <div class="cta-row">
+              <label for="hashInput" class="sr-only">Text to hash</label>
+              <textarea id="hashInput" rows="2" style="width:100%;" placeholder="Text to hash"></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="doHash">Hash</button>
+              <button class="btn secondary" id="copyHash">Copy Hash</button>
+            </div>
+            <div id="hashOut" style="word-break:break-all;">(hash appears here)</div>
+          </div>
+          <div class="tile">
+            <strong>Tip Calculator</strong>
+            <div class="muted">Split bill with tip.</div>
+            <div class="cta-row">
+              <label for="billAmt" class="sr-only">Bill</label>
+              <input id="billAmt" type="number" step="0.01" inputmode="decimal" placeholder="Bill" />
+              <label for="tipPct" class="sr-only">Tip %</label>
+              <input id="tipPct" type="number" step="1" inputmode="decimal" placeholder="Tip %" value="15" />
+              <label for="numPeople" class="sr-only">People</label>
+              <input id="numPeople" type="number" step="1" inputmode="numeric" placeholder="People" value="1" />
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="calcTip">Calculate</button>
+            </div>
+            <div class="muted" id="tipOut">$0.00 per person (tip $0.00)</div>
+          </div>
+          </div>
+        </section>
+
+
+        <section id="contact">
+          <h2>Contact</h2>
+          <div class="info">
+            <div class="tile">
+              <strong>Send Feedback</strong>
+              <form id="contactForm">
+                <div class="cta-row">
+                  <label for="contactName" class="sr-only">Your name</label>
+                  <input id="contactName" type="text" placeholder="Your name" required />
+                  <label for="contactEmail" class="sr-only">Your email</label>
+                  <input id="contactEmail" type="email" placeholder="Your email" required />
+                </div>
+                <div class="cta-row">
+                  <label for="contactMsg" class="sr-only">Your message</label>
+                  <textarea id="contactMsg" rows="3" style="width:100%;" placeholder="Your message" required></textarea>
+                </div>
+                <div class="cta-row">
+                  <button class="btn" type="submit">Open Email Draft</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer>
+        <span>© <span id="year"></span> My Simple Site</span>
+        <span class="muted">Have a great day!</span>
+      </footer>
+    </div>
+    <script src="./src/javascript/main.js"></script>
+  </body>
+</html>
+
+
