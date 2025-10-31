@@ -2,19 +2,6 @@
 
 A tiny, fast, single‑page website with useful everyday tools. Built with plain HTML, CSS, and JavaScript — no frameworks, no build step.
 
-### Preview
-
-Add screenshots to `docs/` for GitHub to render them here. Suggested filenames:
-
-- `docs/preview-dark.png` (dark mode)
-- `docs/preview-light.png` (light mode)
-
-If these files exist, they will appear below:
-
-![Dark mode preview](docs/preview-dark.png)
-![Light mode preview](docs/preview-light.png)
-
-Tip: In your browser, take screenshots of the page (one in dark, one in light), save them to `docs/` with the names above, commit, and push.
 
 ### Features
 
