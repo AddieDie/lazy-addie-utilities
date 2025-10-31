@@ -45,7 +45,6 @@ python3 -m http.server 5173
 │   │   └── style.css     # Dark/Light theme, layout, components
 │   └── javascript/
 │       └── main.js       # All interactive tools and logic
-└── docs/                 # Place screenshots here (preview-*.png)
 ```
 
 ### Implementation notes
