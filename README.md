@@ -41,10 +41,10 @@ python3 -m http.server 5173
 .
 ├── index.html            # App markup and sections
 ├── src/
-│   ├── css/
-│   │   └── style.css     # Dark/Light theme, layout, components
-│   └── javascript/
-│       └── main.js       # All interactive tools and logic
+   ├── css/
+   │   └── style.css     # Dark/Light theme, layout, components
+   └── javascript/
+       └── main.js       # All interactive tools and logic
 ```
 
 ### Implementation notes
