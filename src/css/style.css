@@ -10,12 +10,14 @@
   --border: #1f2937;      /* border color */
   --input: #0f1a34;       /* input background */
 }
-
+ 
+/* CSS Reset */
 * { box-sizing: border-box; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
+
 
 html, body {
   height: 100%;
