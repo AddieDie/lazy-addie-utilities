@@ -14,7 +14,6 @@ const statusEl = document.getElementById('status');
       const contactName = document.getElementById('contactName');
       const contactEmail = document.getElementById('contactEmail');
       const contactMsg = document.getElementById('contactMsg');
-      // New tools elements
       const genUuid = document.getElementById('genUuid');
       const copyUuid = document.getElementById('copyUuid');
       const uuidOut = document.getElementById('uuidOut');
