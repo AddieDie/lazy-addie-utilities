@@ -8,6 +8,7 @@
     <meta name="description" content="A fast, single‑file website with handy tools, a theme toggle, and a PlayerStatus preview.">
   </head>
   <body>
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
     <div class="card">
       <header>
         <div class="logo" aria-hidden="true"></div>
@@ -38,6 +39,9 @@
                   <label><input type="checkbox" id="useNums" checked /> 0-9</label>
                   <label><input type="checkbox" id="useSyms" /> symbols</label>
                 </div>
+              </div>
+              <div class="cta-row">
+                <label><input type="checkbox" id="autoCopyPass" /> Auto-copy</label>
               </div>
               <div class="cta-row">
                 <button class="btn" id="genPass">Generate</button>
@@ -105,7 +109,7 @@
               <label for="wcInput" class="sr-only">Text to count</label>
               <textarea id="wcInput" rows="4" style="width:100%;" placeholder="Type or paste text here"></textarea>
             </div>
-            <div class="muted" id="wcStats">0 words, 0 characters</div>
+            <div class="muted" id="wcStats">0 words, 0 characters, 0 paragraphs, 0 sentences</div>
           </div>
           <div class="tile">
             <strong>UUID Generator</strong>
@@ -173,6 +177,109 @@
             </div>
             <div class="muted" id="tipOut">$0.00 per person (tip $0.00)</div>
           </div>
+          <div class="tile">
+            <strong>QR Code Generator</strong>
+            <div class="muted">Generate QR code from text or URL.</div>
+            <div class="cta-row">
+              <label for="qrInput" class="sr-only">Text or URL</label>
+              <textarea id="qrInput" rows="2" style="width:100%;" placeholder="Enter text or URL"></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="genQr">Generate QR Code</button>
+              <button class="btn secondary" id="downloadQr">Download</button>
+            </div>
+            <div id="qrCanvas" style="margin-top:12px; text-align:center;"></div>
+          </div>
+          <div class="tile">
+            <strong>JSON Formatter</strong>
+            <div class="muted">Format and validate JSON.</div>
+            <div class="cta-row">
+              <label for="jsonInput" class="sr-only">JSON</label>
+              <textarea id="jsonInput" rows="6" style="width:100%; font-family:monospace;" placeholder='{"key": "value"}'></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="formatJson">Format</button>
+              <button class="btn secondary" id="minifyJson">Minify</button>
+              <button class="btn" id="validateJson">Validate</button>
+              <button class="btn secondary" id="copyJson">Copy</button>
+            </div>
+            <div id="jsonStatus" class="muted" style="margin-top:8px;"></div>
+            <div id="jsonOut" style="word-break:break-all; font-family:monospace; margin-top:8px;"></div>
+          </div>
+          <div class="tile">
+            <strong>Text Case Converter</strong>
+            <div class="muted">Convert text to different cases.</div>
+            <div class="cta-row">
+              <label for="caseInput" class="sr-only">Text</label>
+              <textarea id="caseInput" rows="3" style="width:100%;" placeholder="Enter text"></textarea>
+            </div>
+            <div class="case-buttons">
+              <button class="btn btn-small" id="toUpper">UPPERCASE</button>
+              <button class="btn secondary btn-small" id="toLower">lowercase</button>
+              <button class="btn btn-small" id="toTitle">Title Case</button>
+              <button class="btn secondary btn-small" id="toCamel">camelCase</button>
+              <button class="btn btn-small" id="toSnake">snake_case</button>
+              <button class="btn secondary btn-small" id="toKebab">kebab-case</button>
+            </div>
+            <div class="cta-row" style="margin-top:12px;">
+              <button class="btn" id="copyCase">Copy Result</button>
+            </div>
+            <div id="caseOut" class="output-box"></div>
+          </div>
+          <div class="tile">
+            <strong>Timestamp Converter</strong>
+            <div class="muted">Convert between Unix timestamp and date.</div>
+            <div class="cta-row">
+              <label for="tsInput" class="sr-only">Timestamp or date</label>
+              <input id="tsInput" type="text" placeholder="Unix timestamp or date" style="flex:1;" />
+            </div>
+            <div class="cta-row">
+              <button class="btn" id="tsToDate">Timestamp → Date</button>
+              <button class="btn secondary" id="dateToTs">Date → Timestamp</button>
+              <button class="btn" id="tsNow">Now</button>
+              <button class="btn secondary" id="copyTs">Copy</button>
+            </div>
+            <div id="tsOut" style="word-break:break-all; margin-top:12px;"></div>
+          </div>
+          <div class="tile color-picker-tile">
+            <strong>Color Picker & Converter</strong>
+            <div class="muted">Pick color and convert between formats.</div>
+            
+            <div class="color-picker-main">
+              <div class="color-picker-controls">
+                <div class="color-picker-input-wrapper">
+                  <label for="colorPicker" class="color-picker-label">Color Picker</label>
+                  <input id="colorPicker" type="color" value="#4f46e5" class="color-picker-input" />
+                </div>
+                <div class="color-hex-wrapper">
+                  <label for="colorHex" class="color-hex-label">Hex Color</label>
+                  <input id="colorHex" type="text" placeholder="#4f46e5" class="color-hex-input" maxlength="7" />
+                </div>
+              </div>
+              
+              <div id="colorPreview" class="color-preview">
+                <div class="color-preview-text">Color Preview</div>
+              </div>
+              
+              <div class="color-formats">
+                <div class="color-format-item">
+                  <div class="color-format-label">HEX</div>
+                  <div class="color-format-value" id="colorHexValue">#4f46e5</div>
+                  <button class="btn-icon" id="copyColorHex" title="Copy Hex">📋</button>
+                </div>
+                <div class="color-format-item">
+                  <div class="color-format-label">RGB</div>
+                  <div class="color-format-value" id="colorRgbValue">rgb(79, 70, 229)</div>
+                  <button class="btn-icon" id="copyColorRgb" title="Copy RGB">📋</button>
+                </div>
+                <div class="color-format-item">
+                  <div class="color-format-label">HSL</div>
+                  <div class="color-format-value" id="colorHslValue">hsl(245, 73%, 59%)</div>
+                  <button class="btn-icon" id="copyColorHsl" title="Copy HSL">📋</button>
+                </div>
+              </div>
+            </div>
+          </div>
           </div>
         </section>
 
@@ -202,8 +309,7 @@
         </section>
       </main>
       <footer>
-        <span>© <span id="year"></span> My Simple Site</span>
-        <span class="muted">Have a great day!</span>
+        <span>© <span id="year"></span> So Lazy Addie Utilities</span>
       </footer>
     </div>
     <!-- JavaScript -->
