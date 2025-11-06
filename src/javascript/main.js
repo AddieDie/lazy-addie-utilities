@@ -11,6 +11,8 @@ function showToast(message, type = 'info') {
   }, 3000);
 }
 
+
+
 const statusEl = document.getElementById('status');
       const helloBtn = document.getElementById('helloBtn');
       const timeBtn = document.getElementById('timeBtn');
