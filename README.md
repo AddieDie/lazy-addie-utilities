@@ -211,12 +211,4 @@ Contributions are welcome! Feel free to:
 
 ## 📄 License
 
-MIT License - feel free to use this project for any purpose, commercial or personal. Just keep the license and attribution.
-
-## 🙏 Acknowledgments
-
-Built with vanilla web technologies - no frameworks required. Designed for simplicity, speed, and offline functionality.
-
----
-
-**Made with ❤️ for lazy developers who want powerful tools without the bloat.**
+MIT License - feel free to use this project for any purpose, commercial or personal. Just keep the license and attribution
