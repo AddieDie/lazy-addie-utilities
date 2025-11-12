@@ -1,5 +1,4 @@
 :root {
-  /* Dark theme (default) */
   --bg: #0b1020;          /* solid page background */
   --panel: #0f172a;       /* card background */
   --tile: #0b1227;        /* inner tile background */
@@ -11,7 +10,6 @@
   --input: #0f1a34;       /* input background */
 }
  
-/* CSS Reset */
 * { box-sizing: border-box; }
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -37,7 +35,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Toast notifications */
 #toastContainer {
   position: fixed;
   top: 20px;
@@ -265,7 +262,6 @@ section {
 
 .muted { color: var(--muted); }
 
-/* Form controls */
 input, textarea {
   background: var(--input);
   color: var(--text);
@@ -287,13 +283,11 @@ input:focus, textarea:focus {
 }
 input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.85); }
 
-/* Make inputs grow nicely inside rows */
 .cta-row > input, .cta-row > textarea {
   flex: 1 1 220px;
   min-width: 200px;
 }
 
-/* Output box styling */
 .output-box {
   word-break: break-all;
   margin-top: 12px;
@@ -328,7 +322,6 @@ input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.85); }
   margin: 12px 0;
 }
 
-/* Color picker specific styles */
 .color-picker-tile {
   overflow: visible;
   grid-column: span 2;
@@ -564,7 +557,6 @@ input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.85); }
   border-color: rgba(37, 99, 235, 0.4);
 }
 
-/* Ensure headings and preview labels are white */
 h2, .tile > strong { color: #ffffff; }
 h2 { font-size: 22px; margin: 0 0 8px; }
 .tile > strong { display: block; margin-bottom: 8px; font-size: 18px; }
@@ -581,7 +573,6 @@ footer {
   backdrop-filter: blur(6px);
 }
 
-/* Responsive tweaks */
 @media (max-width: 640px) {
   h1 { font-size: 24px; }
   h2 { font-size: 20px; }
@@ -640,7 +631,6 @@ footer {
   }
 }
 
-/* Light theme proper (solid colors) */
 .light {
   --bg: #f6f8fc;
   --panel: #ffffff;
