@@ -97,6 +97,26 @@ const statusEl = document.getElementById('status');
       const colorHexValue = document.getElementById('colorHexValue');
       const colorRgbValue = document.getElementById('colorRgbValue');
       const colorHslValue = document.getElementById('colorHslValue');
+      const toolSearch = document.getElementById('toolSearch');
+      const clearToolSearch = document.getElementById('clearToolSearch');
+      const toolEmptyState = document.getElementById('toolEmptyState');
+      const toolTiles = Array.from(document.querySelectorAll('#toolGrid .tile[data-tool]'));
+      const notesInput = document.getElementById('notesInput');
+      const saveNotes = document.getElementById('saveNotes');
+      const clearNotes = document.getElementById('clearNotes');
+      const notesStatus = document.getElementById('notesStatus');
+      const countdownLabel = document.getElementById('countdownLabel');
+      const countdownTarget = document.getElementById('countdownTarget');
+      const startCountdown = document.getElementById('startCountdown');
+      const stopCountdown = document.getElementById('stopCountdown');
+      const countdownOut = document.getElementById('countdownOut');
+      const regexPattern = document.getElementById('regexPattern');
+      const regexFlags = document.getElementById('regexFlags');
+      const regexText = document.getElementById('regexText');
+      const runRegex = document.getElementById('runRegex');
+      const clearRegex = document.getElementById('clearRegex');
+      const copyRegex = document.getElementById('copyRegex');
+      const regexResult = document.getElementById('regexResult');
 
       yearEl.textContent = new Date().getFullYear();
 
@@ -145,6 +165,74 @@ const statusEl = document.getElementById('status');
           applyTheme(e.matches ? 'light' : 'dark');
         });
       }
+
+      // Tool filtering
+      const applyToolFilter = () => {
+        const query = (toolSearch?.value || '').trim().toLowerCase();
+        let visibleCount = 0;
+        toolTiles.forEach((tile) => {
+          const haystack = `${tile.dataset.tool || ''} ${tile.dataset.tags || ''}`.toLowerCase();
+          const shouldShow = !query || haystack.includes(query);
+          tile.style.display = shouldShow ? '' : 'none';
+          if (shouldShow) visibleCount += 1;
+        });
+        if (toolEmptyState) {
+          const hasMatches = visibleCount > 0;
+          toolEmptyState.hidden = hasMatches;
+          toolEmptyState.setAttribute('aria-hidden', hasMatches ? 'true' : 'false');
+        }
+      };
+      applyToolFilter();
+      toolSearch?.addEventListener('input', () => {
+        applyToolFilter();
+      });
+      clearToolSearch?.addEventListener('click', () => {
+        if (!toolSearch) return;
+        toolSearch.value = '';
+        applyToolFilter();
+        toolSearch.focus();
+      });
+
+      // Quick Notes
+      const NOTES_KEY = 'lazyAddieNotes';
+      const updateNotesStatus = (message, tone = 'muted') => {
+        if (!notesStatus) return;
+        notesStatus.textContent = message;
+        notesStatus.dataset.tone = tone;
+      };
+      const persistNotes = ({ showToastMessage = false, customMessage } = {}) => {
+        if (!notesInput) return;
+        localStorage.setItem(NOTES_KEY, notesInput.value);
+        const message = customMessage || `Saved locally at ${new Date().toLocaleTimeString()}`;
+        updateNotesStatus(message, 'success');
+        if (showToastMessage) {
+          showToast('Notes saved locally', 'success');
+        }
+      };
+      if (notesInput) {
+        const stored = localStorage.getItem(NOTES_KEY);
+        if (stored) {
+          notesInput.value = stored;
+          updateNotesStatus('Restored saved notes', 'success');
+        } else {
+          updateNotesStatus('Nothing saved yet.', 'muted');
+        }
+      }
+      saveNotes?.addEventListener('click', () => persistNotes({ showToastMessage: true }));
+      clearNotes?.addEventListener('click', () => {
+        if (notesInput) notesInput.value = '';
+        localStorage.removeItem(NOTES_KEY);
+        updateNotesStatus('Notes cleared', 'warning');
+        showToast('Notes cleared', 'info');
+      });
+      let notesAutoSaveTimer;
+      notesInput?.addEventListener('input', () => {
+        updateNotesStatus('Unsaved changes…', 'warning');
+        if (notesAutoSaveTimer) clearTimeout(notesAutoSaveTimer);
+        notesAutoSaveTimer = setTimeout(() => {
+          persistNotes({ customMessage: 'Auto-saved' });
+        }, 1500);
+      });
 
       // Converters - Real-time conversion
       const round = (n) => Math.round(n * 100) / 100;
@@ -319,6 +407,63 @@ const statusEl = document.getElementById('status');
         }
       });
 
+      // Countdown timer
+      let countdownInterval = null;
+      const stopCountdownTimer = (message) => {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+        if (message && countdownOut) {
+          countdownOut.textContent = message;
+        }
+      };
+      const formatCountdown = (diff) => {
+        const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        const parts = [];
+        if (days) parts.push(`${days}d`);
+        parts.push(`${hours}h`, `${minutes}m`, `${seconds.toString().padStart(2, '0')}s`);
+        return parts.join(' ');
+      };
+      startCountdown?.addEventListener('click', () => {
+        if (!countdownTarget?.value) {
+          showToast('Pick a target date/time', 'error');
+          return;
+        }
+        const targetDate = new Date(countdownTarget.value);
+        if (isNaN(targetDate.getTime())) {
+          showToast('Invalid date', 'error');
+          return;
+        }
+        const label = countdownLabel?.value.trim() || 'Countdown';
+        const render = () => {
+          const diff = targetDate.getTime() - Date.now();
+          if (diff <= 0) {
+            countdownOut.textContent = `${label} is happening now!`;
+            showToast(`${label} reached!`, 'success');
+            stopCountdownTimer();
+            return;
+          }
+          countdownOut.textContent = `${label}: ${formatCountdown(diff)}`;
+        };
+        render();
+        if (countdownInterval) clearInterval(countdownInterval);
+        countdownInterval = setInterval(render, 1000);
+        showToast('Countdown started', 'success');
+      });
+      stopCountdown?.addEventListener('click', () => {
+        if (!countdownInterval) {
+          stopCountdownTimer('No countdown running.');
+          return;
+        }
+        stopCountdownTimer('Countdown paused.');
+        showToast('Countdown stopped', 'info');
+      });
+
       // QR Code Generator (using simple canvas-based QR)
       function generateQRCode(text) {
         if (!text.trim()) {
@@ -464,6 +609,86 @@ const statusEl = document.getElementById('status');
         try {
           await navigator.clipboard.writeText(text);
           showToast('Result copied!', 'success');
+        } catch (_) {
+          showToast('Copy failed', 'error');
+        }
+      });
+
+      // Regex tester
+      let regexMatchesCache = [];
+      const renderRegexResult = (message) => {
+        if (regexResult) {
+          regexResult.textContent = message;
+        }
+      };
+      const runRegexTest = () => {
+        if (!regexPattern) return;
+        const pattern = regexPattern.value;
+        const flags = (regexFlags?.value || '').trim();
+        const sample = regexText?.value || '';
+        if (!pattern) {
+          showToast('Enter a regex pattern', 'error');
+          return;
+        }
+        let regex;
+        try {
+          regex = new RegExp(pattern, flags);
+        } catch (e) {
+          renderRegexResult(`Invalid pattern: ${e.message}`);
+          showToast('Regex error', 'error');
+          regexMatchesCache = [];
+          return;
+        }
+        if (!sample) {
+          renderRegexResult('Provide sample text to test.');
+          regexMatchesCache = [];
+          return;
+        }
+        const matches = [];
+        if (regex.global) {
+          let match;
+          while ((match = regex.exec(sample)) !== null) {
+            matches.push({ value: match[0], index: match.index });
+            if (match[0] === '') {
+              regex.lastIndex += 1;
+            }
+          }
+        } else {
+          const match = regex.exec(sample);
+          if (match) matches.push({ value: match[0], index: match.index });
+        }
+        if (!matches.length) {
+          renderRegexResult('No matches found.');
+          regexMatchesCache = [];
+          showToast('No matches found', 'info');
+          return;
+        }
+        regexMatchesCache = matches;
+        renderRegexResult(matches.map((m, i) => `#${i + 1} @${m.index}: ${m.value}`).join('\n'));
+        showToast(`Found ${matches.length} match${matches.length === 1 ? '' : 'es'}`, 'success');
+      };
+      runRegex?.addEventListener('click', runRegexTest);
+      clearRegex?.addEventListener('click', () => {
+        if (regexPattern) regexPattern.value = '';
+        if (regexText) regexText.value = '';
+        if (regexFlags) regexFlags.value = 'g';
+        regexMatchesCache = [];
+        renderRegexResult('');
+      });
+      regexFlags?.addEventListener('input', () => {
+        const allowed = (regexFlags.value || '').replace(/[^gimsuy]/gi, '');
+        const unique = Array.from(new Set(allowed.split(''))).join('');
+        regexFlags.value = unique;
+      });
+      copyRegex?.addEventListener('click', async () => {
+        if (!regexMatchesCache.length) {
+          showToast('Run the regex tester first', 'error');
+          return;
+        }
+        const payload = regexMatchesCache.map((m, i) => `#${i + 1} @${m.index}: ${m.value}`).join('\n');
+        try {
+          await navigator.clipboard.writeText(payload);
+          showToast('Matches copied!', 'success');
         } catch (_) {
           showToast('Copy failed', 'error');
         }
