@@ -75,20 +75,28 @@
 
         <section id="tools">
           <h2>Quick Tools</h2>
-          <div class="cta-row">
-          <button class="btn" id="helloBtn">Say Hello</button>
-          <button class="btn secondary" id="timeBtn">Show Time</button>
+          <p class="section-subtitle">Find, filter, and run helpers without leaving this page. Everything happens locally.</p>
+          <div class="tool-filter-bar">
+            <div class="tool-search-field">
+              <label for="toolSearch" class="tool-search-label">Filter tools by name or capability</label>
+              <input id="toolSearch" type="search" class="tool-search-input" placeholder="Try password, json, color…" autocomplete="off" />
+            </div>
+            <button class="btn secondary tool-reset" type="button" id="clearToolSearch">Reset</button>
+          </div>
+          <div class="cta-row quick-starters">
+            <button class="btn" id="helloBtn" type="button">Say Hello</button>
+            <button class="btn secondary" id="timeBtn" type="button">Show Time</button>
           </div>
 
-          <div class="info">
-          <div class="tile">
-            <strong>Status</strong>
+          <div class="info" id="toolGrid">
+          <div class="tile" data-tool="Status Console" data-tags="status greeting hello time clipboard">
+            <strong>Status Console</strong>
             <div id="status" class="muted" role="status" aria-live="polite">Waiting for action…</div>
             <div class="cta-row">
-              <button class="btn" id="copyStatus">Copy Status</button>
+              <button class="btn" id="copyStatus" type="button">Copy Status</button>
             </div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Temperature Converter" data-tags="temperature celsius fahrenheit weather math">
             <strong>Temperature Converter</strong>
             <div class="muted">Convert between Celsius and Fahrenheit.</div>
             <div class="cta-row">
@@ -98,11 +106,11 @@
               <input id="fahrenheit" type="number" inputmode="decimal" step="any" placeholder="Fahrenheit" aria-describedby="toC" />
             </div>
             <div class="cta-row">
-              <button class="btn" id="toF">C → F</button>
-              <button class="btn secondary" id="toC">F → C</button>
+              <button class="btn" id="toF" type="button">C → F</button>
+              <button class="btn secondary" id="toC" type="button">F → C</button>
             </div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Word Counter" data-tags="words characters reading paragraphs sentences notes">
             <strong>Word Counter</strong>
             <div class="muted">Counts words and characters as you type.</div>
             <div class="cta-row">
@@ -111,16 +119,29 @@
             </div>
             <div class="muted" id="wcStats">0 words, 0 characters, 0 paragraphs, 0 sentences</div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Quick Notes" data-tags="notes scratchpad journal save ideas local">
+            <strong>Quick Notes</strong>
+            <div class="muted">Capture snippets—they stay on this device only.</div>
+            <div class="cta-row">
+              <label for="notesInput" class="sr-only">Scratchpad</label>
+              <textarea id="notesInput" rows="4" class="notes-area" placeholder="Catch ideas, todos, or draft text"></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" type="button" id="saveNotes">Save Notes</button>
+              <button class="btn secondary" type="button" id="clearNotes">Clear</button>
+            </div>
+            <div class="notes-status muted" id="notesStatus" role="status" aria-live="polite">Nothing saved yet.</div>
+          </div>
+          <div class="tile" data-tool="UUID Generator" data-tags="uuid unique identifier id random">
             <strong>UUID Generator</strong>
             <div class="muted">Generate a random UUID v4.</div>
             <div class="cta-row">
-              <button class="btn" id="genUuid">Generate UUID</button>
-              <button class="btn secondary" id="copyUuid">Copy</button>
+              <button class="btn" id="genUuid" type="button">Generate UUID</button>
+              <button class="btn secondary" id="copyUuid" type="button">Copy</button>
             </div>
             <div id="uuidOut" style="word-break:break-all;">(click Generate UUID)</div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Base64 Encode Decode" data-tags="base64 encode decode text binary converter">
             <strong>Base64 Encode/Decode</strong>
             <div class="muted">UTF‑8 safe conversion.</div>
             <div class="cta-row">
@@ -128,13 +149,13 @@
               <textarea id="b64Input" rows="3" style="width:100%;" placeholder="Text"></textarea>
             </div>
             <div class="cta-row">
-              <button class="btn" id="b64Encode">Encode →</button>
-              <button class="btn secondary" id="b64Decode">← Decode</button>
-              <button class="btn" id="copyB64">Copy Result</button>
+              <button class="btn" id="b64Encode" type="button">Encode →</button>
+              <button class="btn secondary" id="b64Decode" type="button">← Decode</button>
+              <button class="btn" id="copyB64" type="button">Copy Result</button>
             </div>
             <div id="b64Out" style="word-break:break-all;">(result appears here)</div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="URL Encode Decode" data-tags="url encode decode web escape unescape">
             <strong>URL Encode/Decode</strong>
             <div class="muted">Escape or unescape URLs.</div>
             <div class="cta-row">
@@ -142,13 +163,13 @@
               <textarea id="urlInput" rows="2" style="width:100%;" placeholder="URL or text"></textarea>
             </div>
             <div class="cta-row">
-              <button class="btn" id="urlEncode">Encode →</button>
-              <button class="btn secondary" id="urlDecode">← Decode</button>
-              <button class="btn" id="copyUrl">Copy Result</button>
+              <button class="btn" id="urlEncode" type="button">Encode →</button>
+              <button class="btn secondary" id="urlDecode" type="button">← Decode</button>
+              <button class="btn" id="copyUrl" type="button">Copy Result</button>
             </div>
             <div id="urlOut" style="word-break:break-all;">(result appears here)</div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="SHA256 Hasher" data-tags="sha hash crypto digest security">
             <strong>SHA‑256 Hasher</strong>
             <div class="muted">Hash text to hex digest.</div>
             <div class="cta-row">
@@ -156,12 +177,12 @@
               <textarea id="hashInput" rows="2" style="width:100%;" placeholder="Text to hash"></textarea>
             </div>
             <div class="cta-row">
-              <button class="btn" id="doHash">Hash</button>
-              <button class="btn secondary" id="copyHash">Copy Hash</button>
+              <button class="btn" id="doHash" type="button">Hash</button>
+              <button class="btn secondary" id="copyHash" type="button">Copy Hash</button>
             </div>
             <div id="hashOut" style="word-break:break-all;">(hash appears here)</div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Tip Calculator" data-tags="math tip calculator dining bill split">
             <strong>Tip Calculator</strong>
             <div class="muted">Split bill with tip.</div>
             <div class="cta-row">
@@ -173,11 +194,26 @@
               <input id="numPeople" type="number" step="1" inputmode="numeric" placeholder="People" value="1" />
             </div>
             <div class="cta-row">
-              <button class="btn" id="calcTip">Calculate</button>
+              <button class="btn" id="calcTip" type="button">Calculate</button>
             </div>
             <div class="muted" id="tipOut">$0.00 per person (tip $0.00)</div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Countdown Timer" data-tags="countdown timer reminder focus event planning">
+            <strong>Countdown Timer</strong>
+            <div class="muted">Name an event and keep the time remaining visible.</div>
+            <div class="cta-row">
+              <label for="countdownLabel" class="sr-only">Event name</label>
+              <input id="countdownLabel" type="text" placeholder="Event name e.g. Launch" />
+              <label for="countdownTarget" class="sr-only">Target date and time</label>
+              <input id="countdownTarget" type="datetime-local" />
+            </div>
+            <div class="cta-row">
+              <button class="btn" type="button" id="startCountdown">Start</button>
+              <button class="btn secondary" type="button" id="stopCountdown">Stop</button>
+            </div>
+            <div id="countdownOut" class="output-box countdown-output" aria-live="polite">No countdown running.</div>
+          </div>
+          <div class="tile" data-tool="QR Code Generator" data-tags="qr generator code share link">
             <strong>QR Code Generator</strong>
             <div class="muted">Generate QR code from text or URL.</div>
             <div class="cta-row">
@@ -185,12 +221,12 @@
               <textarea id="qrInput" rows="2" style="width:100%;" placeholder="Enter text or URL"></textarea>
             </div>
             <div class="cta-row">
-              <button class="btn" id="genQr">Generate QR Code</button>
-              <button class="btn secondary" id="downloadQr">Download</button>
+              <button class="btn" id="genQr" type="button">Generate QR Code</button>
+              <button class="btn secondary" id="downloadQr" type="button">Download</button>
             </div>
             <div id="qrCanvas" style="margin-top:12px; text-align:center;"></div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="JSON Formatter" data-tags="json format validate minify prettify">
             <strong>JSON Formatter</strong>
             <div class="muted">Format and validate JSON.</div>
             <div class="cta-row">
@@ -198,15 +234,15 @@
               <textarea id="jsonInput" rows="6" style="width:100%; font-family:monospace;" placeholder='{"key": "value"}'></textarea>
             </div>
             <div class="cta-row">
-              <button class="btn" id="formatJson">Format</button>
-              <button class="btn secondary" id="minifyJson">Minify</button>
-              <button class="btn" id="validateJson">Validate</button>
-              <button class="btn secondary" id="copyJson">Copy</button>
+              <button class="btn" id="formatJson" type="button">Format</button>
+              <button class="btn secondary" id="minifyJson" type="button">Minify</button>
+              <button class="btn" id="validateJson" type="button">Validate</button>
+              <button class="btn secondary" id="copyJson" type="button">Copy</button>
             </div>
             <div id="jsonStatus" class="muted" style="margin-top:8px;"></div>
             <div id="jsonOut" style="word-break:break-all; font-family:monospace; margin-top:8px;"></div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Text Case Converter" data-tags="text case upper lower snake camel title copy">
             <strong>Text Case Converter</strong>
             <div class="muted">Convert text to different cases.</div>
             <div class="cta-row">
@@ -214,19 +250,39 @@
               <textarea id="caseInput" rows="3" style="width:100%;" placeholder="Enter text"></textarea>
             </div>
             <div class="case-buttons">
-              <button class="btn btn-small" id="toUpper">UPPERCASE</button>
-              <button class="btn secondary btn-small" id="toLower">lowercase</button>
-              <button class="btn btn-small" id="toTitle">Title Case</button>
-              <button class="btn secondary btn-small" id="toCamel">camelCase</button>
-              <button class="btn btn-small" id="toSnake">snake_case</button>
-              <button class="btn secondary btn-small" id="toKebab">kebab-case</button>
+              <button class="btn btn-small" id="toUpper" type="button">UPPERCASE</button>
+              <button class="btn secondary btn-small" id="toLower" type="button">lowercase</button>
+              <button class="btn btn-small" id="toTitle" type="button">Title Case</button>
+              <button class="btn secondary btn-small" id="toCamel" type="button">camelCase</button>
+              <button class="btn btn-small" id="toSnake" type="button">snake_case</button>
+              <button class="btn secondary btn-small" id="toKebab" type="button">kebab-case</button>
             </div>
             <div class="cta-row" style="margin-top:12px;">
-              <button class="btn" id="copyCase">Copy Result</button>
+              <button class="btn" id="copyCase" type="button">Copy Result</button>
             </div>
             <div id="caseOut" class="output-box"></div>
           </div>
-          <div class="tile">
+          <div class="tile" data-tool="Regex Tester" data-tags="regex pattern tester developer text search find">
+            <strong>Regex Tester</strong>
+            <div class="muted">Quickly test regular expressions with live matches.</div>
+            <div class="cta-row regex-inputs">
+              <label for="regexPattern" class="sr-only">Regex pattern</label>
+              <input id="regexPattern" type="text" placeholder="Pattern e.g. ^[A-Z]\\w+" />
+              <label for="regexFlags" class="sr-only">Regex flags</label>
+              <input id="regexFlags" type="text" class="regex-flags" maxlength="6" value="g" placeholder="Flags" />
+            </div>
+            <div class="cta-row">
+              <label for="regexText" class="sr-only">Sample text</label>
+              <textarea id="regexText" rows="4" placeholder="Paste sample text here"></textarea>
+            </div>
+            <div class="cta-row">
+              <button class="btn" type="button" id="runRegex">Test Pattern</button>
+              <button class="btn secondary" type="button" id="clearRegex">Clear</button>
+              <button class="btn" type="button" id="copyRegex">Copy Matches</button>
+            </div>
+            <div id="regexResult" class="output-box" aria-live="polite"></div>
+          </div>
+          <div class="tile" data-tool="Timestamp Converter" data-tags="timestamp unix date time convert now copy">
             <strong>Timestamp Converter</strong>
             <div class="muted">Convert between Unix timestamp and date.</div>
             <div class="cta-row">
@@ -234,14 +290,14 @@
               <input id="tsInput" type="text" placeholder="Unix timestamp or date" style="flex:1;" />
             </div>
             <div class="cta-row">
-              <button class="btn" id="tsToDate">Timestamp → Date</button>
-              <button class="btn secondary" id="dateToTs">Date → Timestamp</button>
-              <button class="btn" id="tsNow">Now</button>
-              <button class="btn secondary" id="copyTs">Copy</button>
+              <button class="btn" id="tsToDate" type="button">Timestamp → Date</button>
+              <button class="btn secondary" id="dateToTs" type="button">Date → Timestamp</button>
+              <button class="btn" id="tsNow" type="button">Now</button>
+              <button class="btn secondary" id="copyTs" type="button">Copy</button>
             </div>
             <div id="tsOut" style="word-break:break-all; margin-top:12px;"></div>
           </div>
-          <div class="tile color-picker-tile">
+          <div class="tile color-picker-tile" data-tool="Color Picker Converter" data-tags="color picker converter hex rgb hsl design">
             <strong>Color Picker & Converter</strong>
             <div class="muted">Pick color and convert between formats.</div>
             
@@ -281,6 +337,7 @@
             </div>
           </div>
           </div>
+          <div id="toolEmptyState" class="tool-empty muted" role="status" aria-live="polite" hidden>No tools match your search (yet!).</div>
         </section>
 
 
