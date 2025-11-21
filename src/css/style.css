@@ -202,11 +202,52 @@ section {
   scroll-margin-top: 80px;
 }
 
+.section-subtitle {
+  margin: -6px 0 12px;
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 720px;
+}
+
 .cta-row {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   margin: 20px 0 10px;
+}
+
+.quick-starters {
+  margin-top: 4px;
+}
+
+.tool-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  margin: 18px 0 6px;
+}
+
+.tool-search-field {
+  flex: 1 1 280px;
+  min-width: 240px;
+}
+
+.tool-search-label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.tool-search-input {
+  width: 100%;
+}
+
+.tool-reset {
+  flex: 0 0 auto;
 }
 
 .btn {
@@ -286,6 +327,43 @@ input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.85); }
 .cta-row > input, .cta-row > textarea {
   flex: 1 1 220px;
   min-width: 200px;
+}
+
+.notes-area {
+  width: 100%;
+  min-height: 140px;
+}
+
+.notes-status {
+  font-size: 14px;
+  margin-top: 4px;
+  color: var(--muted);
+}
+
+.notes-status[data-tone="success"] { color: var(--accent-2); }
+.notes-status[data-tone="warning"] { color: #facc15; }
+.notes-status[data-tone="error"] { color: #f87171; }
+
+.tool-empty {
+  border: 1px dashed var(--border);
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.5);
+  margin: 8px 0 0;
+}
+
+.countdown-output {
+  font-weight: 600;
+  min-height: 60px;
+}
+
+.regex-inputs input {
+  min-width: 0;
+}
+
+.regex-flags {
+  max-width: 120px;
 }
 
 .output-box {
